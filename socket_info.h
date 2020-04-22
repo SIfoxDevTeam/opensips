@@ -47,6 +47,7 @@ struct socket_info {
 	str port_no_str; /*!< port number converted to string -- optimization*/
 	enum si_flags flags; /*!< SI_IS_IP | SI_IS_LO | SI_IS_MCAST | SI_IS_ANYCAST */
 	union sockaddr_union su;
+	union sockaddr_union sctp_sec_su;
 	int proto; /*!< tcp or udp*/
 	str sock_str;
 	str adv_sock_str;

@@ -190,6 +190,10 @@ static struct socket_info* new_sock_info( struct socket_id *sid)
 			}
 		}
 	}
+	if ( si->proto==PROTO_SCTP ) {
+		if ( sid->sctp_sec_addr )
+			init_su(&(si->sctp_sec_su), sid->sctp_sec_addr, 0);
+	}
 	return si;
 error:
 	LM_ERR("pkg memory allocation error\n");

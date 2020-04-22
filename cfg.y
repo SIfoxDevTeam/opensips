@@ -148,6 +148,7 @@ action_elem_t *a_tmp;
 
 static inline void warn(char* s);
 static struct socket_id* mk_listen_id(char*, enum sip_protos, int);
+static struct socket_id* mk_listen_id_sec(char*, enum sip_protos, int, struct ip_addr*);
 static struct socket_id* set_listen_id_adv(struct socket_id *, char *, int);
 static struct multi_str *new_string(char *s);
 static int parse_ipnet(char *in, int len, struct net **ipnet);
@@ -341,6 +342,7 @@ extern int cfg_parse_only_routes;
 %token LOGNAME
 %token AVP_ALIASES
 %token LISTEN
+%token SCTP_SEC_ADDR
 %token MEMGROUP
 %token ALIAS
 %token AUTO_ALIASES
@@ -640,6 +642,8 @@ phostport: proto COLON listen_id	{ IFOR();
 				$$=mk_listen_id($3, $1, 0); }
 			| proto COLON listen_id COLON port	{ IFOR();
 				$$=mk_listen_id($3, $1, $5);}
+			| proto COLON listen_id COLON port SCTP_SEC_ADDR ip	{ IFOR();
+				$$=mk_listen_id_sec($3, $1, $5, $7);}
 			| proto COLON listen_id COLON error {
 				$$=0;
 				yyerror("port number expected");
@@ -2343,6 +2347,24 @@ static struct socket_id* mk_listen_id(char* host, enum sip_protos proto,
 		l->name     = host;
 		l->proto    = proto;
 		l->port     = port;
+	}
+
+	return l;
+}
+
+static struct socket_id* mk_listen_id_sec(char* host, enum sip_protos proto,
+												int port, struct ip_addr* sec_addr)
+{
+	struct socket_id* l;
+	l=pkg_malloc(sizeof(struct socket_id));
+	if (l==0){
+		LM_CRIT("cfg. parser: out of memory.\n");
+	}else{
+		memset(l, 0, sizeof(*l));
+		l->name     = host;
+		l->proto    = proto;
+		l->port     = port;
+		l->sctp_sec_addr = sec_addr;
 	}
 
 	return l;

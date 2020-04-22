@@ -279,6 +279,7 @@ DISABLE_503_TRANSLATION "disable_503_translation"
 AUTO_SCALING_PROFILE "auto_scaling_profile"
 AUTO_SCALING_CYCLE "auto_scaling_cycle"
 TIMER_WORKERS "timer_workers"
+SCTP_SEC_ADDR "sctp_sec_addr"
 
 MPATH	mpath
 LOADMODULE	loadmodule
@@ -513,6 +514,8 @@ SPACE		[ ]
 									return AUTO_SCALING_CYCLE; }
 <INITIAL>{TIMER_WORKERS}	{	count(); yylval.strval=yytext;
 									return TIMER_WORKERS; }
+<INITIAL>{SCTP_SEC_ADDR}       {       count(); yylval.strval=yytext;
+									return SCTP_SEC_ADDR; }
 
 <INITIAL>{MPATH}	   { count(); yylval.strval=yytext; return MPATH; }
 <INITIAL>{LOADMODULE}  { count(); yylval.strval=yytext; return LOADMODULE; }

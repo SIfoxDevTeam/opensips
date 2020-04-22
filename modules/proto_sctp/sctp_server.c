@@ -125,6 +125,17 @@ int proto_sctp_init_listener(struct socket_info* sock_info)
 					" local address, try site local or global\n");
 		goto error;
 	}
+	if (sock_info->sctp_sec_su.s.sa_family != 0) {
+		if (sctp_bindx(sock_info->socket,
+			(struct sockaddr *)&(sock_info->sctp_sec_su), 1,
+			SCTP_BINDX_ADD_ADDR) == -1)
+				LM_ERR("bindx(%x, %p) : %s\n",
+						sock_info->socket, &(sock_info->sctp_sec_su.s),
+						strerror(errno));
+		else
+			LM_INFO("sctp bindx success to: %s\n",
+				inet_ntoa(((struct sockaddr_in *)&sock_info->sctp_sec_su)->sin_addr));
+	}
 	if(listen(sock_info->socket, LISTEN_BACKLOG)<0){
 		LM_ERR("listen(%x, %d) on %s: %s\n",
 				sock_info->socket,

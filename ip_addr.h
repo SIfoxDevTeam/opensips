@@ -121,6 +121,7 @@ struct socket_id {
 	int proto;
 	int port;
 	int workers;
+	struct ip_addr* sctp_sec_addr;
 	enum si_flags flags;
 	struct socket_id* next;
 };
