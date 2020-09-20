@@ -319,7 +319,7 @@ int is_pre_daemon = 1;
 
 char* pid_file = 0; /* filename as asked by user */
 char* pgid_file = 0;
-
+uint32_t sctp_send_ttl_ms = 0;
 
 /**
  * Clean up on exit. This should be called before exiting.

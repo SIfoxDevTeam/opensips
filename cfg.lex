@@ -210,6 +210,7 @@ LOGFACILITY	log_facility
 LOGNAME		log_name
 LISTEN		listen
 SOCKET		socket
+SCTP_SEND_TTL_MS	sctp_send_ttl_ms
 MEMGROUP	mem-group
 ALIAS		alias
 AUTO_ALIASES	auto_aliases
@@ -413,6 +414,7 @@ SPACE		[ ]
 <INITIAL>{LOGNAME}	{ yylval.strval=yytext; return LOGNAME; }
 <INITIAL>{LISTEN}	{ count(); yylval.strval=yytext; return LISTEN; }
 <INITIAL>{SOCKET}	{ count(); yylval.strval=yytext; return SOCKET; }
+<INITIAL>{SCTP_SEND_TTL_MS}	{ count(); yylval.strval=yytext; return SCTP_SEND_TTL_MS; }
 <INITIAL>{MEMGROUP}	{ count(); yylval.strval=yytext; return MEMGROUP; }
 <INITIAL>{ALIAS}	{ count(); yylval.strval=yytext; return ALIAS; }
 <INITIAL>{AUTO_ALIASES}	{ count(); yylval.strval=yytext; return AUTO_ALIASES; }

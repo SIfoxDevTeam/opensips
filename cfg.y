@@ -291,6 +291,7 @@ extern int cfg_parse_only_routes;
 %token LISTEN
 %token SOCKET
 %token SCTP_SEC_ADDR
+%token SCTP_SEND_TTL_MS
 %token MEMGROUP
 %token ALIAS
 %token AUTO_ALIASES
@@ -1083,6 +1084,9 @@ assign_stm: LOGLEVEL EQUAL snumber { IFOR();
 		| LISTEN EQUAL  error { yyerror("ip address or hostname "
 						"expected (use quotes if the hostname includes"
 						" config keywords)"); }
+		| SCTP_SEND_TTL_MS EQUAL NUMBER { IFOR();
+								sctp_send_ttl_ms=$3; }
+		| SCTP_SEND_TTL_MS EQUAL error { yyerror("number expected"); }
 		| MEMGROUP EQUAL STRING COLON multi_string { IFOR();
 							/* convert STIRNG ($3) to an ID */
 							/* update the memstats type for each module */
